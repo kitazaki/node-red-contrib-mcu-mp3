@@ -1,0 +1,32 @@
+{
+  "name": "@kitazaki/node-red-contrib-mcu-mp3",
+  "version": "0.0.1",
+  "description": "mp3 player with Node-RED MCU",
+  "main": "mcu_mp3.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "node-red": {
+    "version": ">=3.0.0",
+    "nodes": {
+      "displayimage": "mcu_mp3.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kitazaki/node-red-contrib-mcu-mp3.git"
+
+  },
+  "keywords": [
+    "node-red",
+    "node-red-mcu",
+    "moddable",
+    "mp3"
+  ],
+  "author": "@kitazaki",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/kitazaki/node-red-contrib-mcu-mp3/issues"
+  },
+  "homepage": "https://github.com/kitazaki/node-red-contrib-mcu-mp3#readme"
+}

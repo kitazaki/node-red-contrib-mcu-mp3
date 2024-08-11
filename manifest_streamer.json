@@ -1,0 +1,9 @@
+{
+        "include": [
+                "$(MODDABLE)/modules/data/mp3/manifest.json"
+        ],
+        "modules": {
+                "*": "./mp3resourcestreamer"
+        },
+        "preload": "mp3resourcestreamer"
+}
