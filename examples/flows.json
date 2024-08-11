@@ -1,0 +1,220 @@
+[
+    {
+        "id": "828bed83721cb8fe",
+        "type": "tab",
+        "label": "フロー 1",
+        "disabled": false,
+        "info": "",
+        "env": [],
+        "_mcu": {
+            "mcu": true
+        }
+    },
+    {
+        "id": "6da60fbb087a45ac",
+        "type": "inject",
+        "z": "828bed83721cb8fe",
+        "name": "jikan",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "_mcu": {
+            "mcu": true
+        },
+        "x": 90,
+        "y": 120,
+        "wires": [
+            [
+                "766e837bbd700b81"
+            ]
+        ]
+    },
+    {
+        "id": "fe10fe6660cb15ed",
+        "type": "mcu_mp3",
+        "z": "828bed83721cb8fe",
+        "name": "",
+        "volume": "32",
+        "moddable_manifest": {
+            "include": "manifest.json"
+        },
+        "_mcu": {
+            "mcu": true
+        },
+        "x": 520,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "766e837bbd700b81",
+        "type": "http request",
+        "z": "828bed83721cb8fe",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "http://kitazaki2.cloudfree.jp/mp3/jikan_1.mp3",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "_mcu": {
+            "mcu": true
+        },
+        "x": 310,
+        "y": 120,
+        "wires": [
+            [
+                "1830256145c5f365",
+                "fe10fe6660cb15ed"
+            ]
+        ]
+    },
+    {
+        "id": "1830256145c5f365",
+        "type": "debug",
+        "z": "828bed83721cb8fe",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "_mcu": {
+            "mcu": true
+        },
+        "x": 520,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "3503fe5f09cde10d",
+        "type": "inject",
+        "z": "828bed83721cb8fe",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "_mcu": {
+            "mcu": true
+        },
+        "x": 120,
+        "y": 60,
+        "wires": [
+            [
+                "e321b6e00bef0bdb"
+            ]
+        ]
+    },
+    {
+        "id": "e321b6e00bef0bdb",
+        "type": "debug",
+        "z": "828bed83721cb8fe",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "_mcu": {
+            "mcu": true
+        },
+        "x": 300,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "f7956652ee2a3802",
+        "type": "http request",
+        "z": "828bed83721cb8fe",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "http://kitazaki2.cloudfree.jp/mp3/startup.mp3",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "_mcu": {
+            "mcu": true
+        },
+        "x": 310,
+        "y": 160,
+        "wires": [
+            [
+                "fe10fe6660cb15ed",
+                "1830256145c5f365"
+            ]
+        ]
+    },
+    {
+        "id": "ac0a6fb50820f5c4",
+        "type": "inject",
+        "z": "828bed83721cb8fe",
+        "name": "startup",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "_mcu": {
+            "mcu": true
+        },
+        "x": 90,
+        "y": 160,
+        "wires": [
+            [
+                "f7956652ee2a3802"
+            ]
+        ]
+    }
+]
