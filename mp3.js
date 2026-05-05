@@ -1,46 +1,84 @@
 import {Node} from "nodered";
-import AudioOut from "pins/audioout";
 import ResourceStreamer from "mp3resourcestreamer";
-let audio, volume;
 
 class Mp3 extends Node {
-    onStart(config) {
-        super.onStart(config);
-        volume = Number(config.volume);
-	//console.log("key,volume:"+key+","+volume);
+	#streamer;
 
-	audio = new AudioOut({});
-        audio.enqueue(0, AudioOut.Volume, volume);
-        audio.start();
-    };
-    onMessage(msg, done) {
-	//console.log("msg:"+msg.payload);
+	onStart(config) {
+		super.onStart(config);
 
-	new ResourceStreamer({
-		data: msg.payload,
-		audio: {
-			out: audio,
-			sampleRate: 44100,
-			stream: 0
-		},
-		onError(e) {
-			trace("ERROR: ", e, "\n");
-			//this.close();
-                        done();
-		},
-		onDone() {
-			trace("Done\n");
-			//this.close();
-			done();
+		this.volume = normalizeVolume(config.volume);
+
+		trace(`mcu_mp3 start: volume=${this.volume}\n`);
+	}
+
+	onMessage(msg, done) {
+		if (this.#streamer) {
+			this.#streamer.close();
+			this.#streamer = undefined;
 		}
-	})
 
-	//this.send(msg);
-        //done();
-    };
-    static type = "mcu_mp3";
-    static {
-         RED.nodes.registerType(this.type, this)
-    };
-};
+		const streamer = new ResourceStreamer({
+			data: msg.payload,
 
+			// sampleRate は固定しない。
+			// mp3resourcestreamer.js 側でMP3から自動検出する。
+			bitsPerSample: 16,
+			numChannels: 1,
+
+			volume: this.volume,
+
+			bufferFrames: 24,
+			maxFrames: 64,
+
+			onError: e => {
+				trace("ERROR: ", e, "\n");
+
+				if (this.#streamer === streamer) {
+					streamer.close();
+					this.#streamer = undefined;
+				}
+
+				done();
+			},
+
+			onDone: () => {
+				trace("Done\n");
+
+				if (this.#streamer === streamer) {
+					streamer.close();
+					this.#streamer = undefined;
+				}
+
+				done();
+			}
+		});
+
+		this.#streamer = streamer;
+	}
+
+	static type = "mcu_mp3";
+
+	static {
+		RED.nodes.registerType(this.type, this);
+	}
+}
+
+function normalizeVolume(value) {
+	value = Number(value);
+
+	if (isNaN(value))
+		return 0.15;
+
+	if (value > 1)
+		value = value / 256;
+
+	if (value < 0)
+		value = 0;
+	else if (value > 1)
+		value = 1;
+
+	return value;
+}
+
+export default Mp3;
