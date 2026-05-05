@@ -1,6 +1,6 @@
 {
   "name": "@kitazaki/node-red-contrib-mcu-mp3",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "mp3 player with Node-RED MCU",
   "main": "mcu_mp3.js",
   "engines": {
